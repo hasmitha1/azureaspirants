@@ -1,0 +1,50 @@
+{
+	"name": "derivedupperorlower",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "employee",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "employee",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "upperower"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          id as short,",
+				"          employee as string,",
+				"          salary as short,",
+				"          deptid as short",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source1 derive(employee = upper(employee)) ~> upperower",
+				"upperower sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          {id employee salary dept id} as string",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
+			]
+		}
+	}
+}

@@ -1,0 +1,55 @@
+{
+	"name": "aggregate",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "employee",
+						"type": "DatasetReference"
+					},
+					"name": "employee"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "employee",
+						"type": "DatasetReference"
+					},
+					"name": "sink1",
+					"rejectedDataLinkedService": {
+						"referenceName": "ls_boomi_dev",
+						"type": "LinkedServiceReference"
+					}
+				}
+			],
+			"transformations": [
+				{
+					"name": "totalnoofemployee"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          id as short,",
+				"          employee as string,",
+				"          salary as short,",
+				"          deptid as short",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> employee",
+				"employee aggregate(groupBy(employee),",
+				"     deptid = count(deptid)) ~> totalnoofemployee",
+				"totalnoofemployee sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          {id employee salary dept id} as string",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
+			]
+		}
+	}
+}

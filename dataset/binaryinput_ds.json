@@ -1,0 +1,19 @@
+{
+	"name": "binaryinput_ds",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_boomi_dev",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "input.txt.txt",
+				"container": "source"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

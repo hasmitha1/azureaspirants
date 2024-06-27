@@ -1,0 +1,9 @@
+{
+	"name": "adf-boomi-dev",
+	"location": "southindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "1b844235-5246-4e01-8457-142e806e5cb2",
+		"tenantId": "183dd931-d09c-4664-a890-e71e5c6f414b"
+	}
+}

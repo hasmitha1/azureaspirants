@@ -1,0 +1,19 @@
+{
+	"name": "dlt",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_boomi_dev",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "json.txt",
+				"container": "source"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

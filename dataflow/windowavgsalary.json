@@ -1,0 +1,62 @@
+{
+	"name": "windowavgsalary",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "empdetails",
+						"type": "DatasetReference"
+					},
+					"name": "employeedetails"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "Destination",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "window1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          id as integer,",
+				"          employee as string,",
+				"          salary as integer,",
+				"          depart as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> employeedetails",
+				"employeedetails window(over(depart),",
+				"     asc(salary, true),",
+				"     avgsalary = avg(salary)) ~> window1",
+				"window1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          name as string,",
+				"          {alpha-2} as string,",
+				"          {alpha-3} as string,",
+				"          {country-code} as string,",
+				"          {iso_3166-2} as string,",
+				"          region as string,",
+				"          {sub-region} as string,",
+				"          {intermediate-region} as string,",
+				"          {region-code} as string,",
+				"          {sub-region-code} as string,",
+				"          {intermediate-region-code} as string",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
+			]
+		}
+	}
+}
